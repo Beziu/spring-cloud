@@ -1,28 +1,31 @@
 package com.bezio.my.reservationservices;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.Date;
 
 @RestController
 @RequestMapping("/reservations")
 public class ReservationWebService {
 
-    private final ReservationRepository repository;
+    private ReservationRepository repository;
 
     public ReservationWebService (ReservationRepository repository) {
+        super();
         this.repository = repository;
     }
 
     @GetMapping
-    public Iterable<Reservation> getAllReservations() {
-        return repository.findAll();
+    public Iterable<Reservation> getReservations(@RequestParam(name = "date", required = false) Date date) {
+        if (null != date) {
+            return this.repository.findAllByDate(date);
+        }
+        return this.repository.findAll();
     }
 
     @GetMapping("/{id}")
     public Reservation getReservation(@PathVariable("id") long id) {
-        return repository.findById(id).get();
+        return this.repository.findById(id).get();
     }
 
 }
