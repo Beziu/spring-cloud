@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/guest")
-public class GestWebServices {
+@RequestMapping("/guests")
+public class GuestWebServices {
 
     private final GuestRepository repository;
 
-    public GestWebServices (GuestRepository repository) {
+    public GuestWebServices (GuestRepository repository) {
         super();
         this.repository = repository;
     }
@@ -22,7 +22,7 @@ public class GestWebServices {
     }
 
     @GetMapping("/{id}")
-    public Guest gertGuest(@PathVariable("id") long id) {
+    public Guest getGuest(@PathVariable("id") long id) {
         return this.repository.findById(id).get();
     }
 
